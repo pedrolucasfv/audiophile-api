@@ -14,7 +14,7 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  let { name, description, price, image, productID } = req.body;
+  let { name, description, price, image, productID, category } = req.body;
   try {
     let produto = await Produto.create({
       name,
@@ -22,6 +22,7 @@ router.post("/", async (req, res) => {
       price,
       image,
       productID,
+      category
     });
     res.status(200).json(produto);
   } catch (error) {
