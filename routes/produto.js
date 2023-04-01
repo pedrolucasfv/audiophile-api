@@ -22,7 +22,7 @@ router.post("/", async (req, res) => {
       price,
       image,
       productID,
-      category
+      category,
     });
     res.status(200).json(produto);
   } catch (error) {
@@ -31,8 +31,9 @@ router.post("/", async (req, res) => {
 });
 
 router.get("/:productID", async (req, res) => {
+  let { productID } = req.params;
   try {
-    let produto = await Produto.findOne(req.body.productID);
+    let produto = await Produto.findOne({ productID });
     res.status(200).json(produto);
   } catch (error) {
     res.status(422).json(error);
@@ -40,11 +41,12 @@ router.get("/:productID", async (req, res) => {
 });
 
 router.put("/:productID", async (req, res) => {
-  let { name, description, price, image, productID } = req.body;
+  let { name, description, price, image, category } = req.body;
+  let { productID } = req.params;
   try {
     let produto = await Produto.findOneAndUpdate(
-      req.body.productID,
-      { name, description, price, image, productID },
+      { productID },
+      { name, description, price, image, category },
       { new: true }
     );
     res.status(200).json(produto);
@@ -54,8 +56,9 @@ router.put("/:productID", async (req, res) => {
 });
 
 router.delete("/:productID", async (req, res) => {
+  let { productID } = req.params;
   try {
-    let produto = await Produto.findOneAndDelete(req.body.productID);
+    let produto = await Produto.findOneAndDelete({productID});
     res.status(200).json(produto);
   } catch (error) {
     res.status(422).json(error);
